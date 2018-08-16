@@ -21,12 +21,57 @@ class LoginService extends Service{
 
 
 	  	const session_key = wxRes.data.session_key
-	  	const openid = wxRes.data.openid
+	  	const open_id = wxRes.data.openid
 
-	  	let cryptData = new crypt( appid,session_key )
-	  	let userInfo  = cryptData.decryptData( encryptedData,iv )
-	  	console.log( userInfo )
-	  	return wxRes.data
+	  	try{
+
+		  	let cryptData = new crypt( appid,session_key )
+
+		  	let userInfo  = cryptData.decryptData( encryptedData,iv )
+
+		  	const mysql  =  this.app.mysql
+
+		  	const user_info = JSON.stringify( userInfo )
+
+		  	const create_time = userInfo.watermark.timeshamp
+
+		  	const last_visit_time = new Date().getTime()
+		  	
+		  	let getId = await mysql.get('user',{
+		  		open_id
+		  	})
+
+		  	let insertQuery
+		  	
+	  		if( getId.open_id ){
+				insertQuery  = await mysql.update('user',{
+			  		uuid:"",
+			  		skey:'数据更新',
+			  		last_visit_time:last_visit_time,
+			  		session_key:session_key,
+			  		user_info:user_info
+			  	},{
+			  		where:{
+		  				open_id
+			  		}
+			  	})
+		  	}else{
+		  		insertQuery  = await mysql.insert('user',{
+			  		open_id:open_id,
+			  		uuid:"",
+			  		skey:'fanfan',
+			  		create_time:create_time,
+			  		last_visit_time:last_visit_time,
+			  		session_key:session_key,
+			  		user_info:user_info
+			  	})
+		  	}
+			return wxRes.data
+		  }catch(e){
+		  	return 'error'	
+		  }
+	  	
+	  	
 	}
 
 }

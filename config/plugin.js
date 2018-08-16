@@ -12,6 +12,12 @@ exports.nunjucks = {
   package: 'egg-view-nunjucks'
 };
 
+// exports.static = {
+//     enable: true,
+//     package: 'egg-static',
+// };
+
+
 exports.cors = {
     enable: true,
     package: 'egg-cors',

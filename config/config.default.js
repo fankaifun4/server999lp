@@ -58,17 +58,27 @@ module.exports = appInfo => {
 
 
   // 添加 view 配置
-  // config.view = {
-  //   defaultViewEngine: 'nunjucks',
-  //   mapping: {
-  //     '.tpl': 'nunjucks',
-  //   },
-  // };
+  config.view = {
+    root: path.join(appInfo.baseDir, 'app/public'),
+    defaultViewEngine: 'nunjucks',
+    mapping: {
+      '.html': 'nunjucks',
+    },
+  };
 
   // config.news={
   //   pageSize:5,
   //   serverUrl:'https://hacker-news.firebaseio.com/v0'
   // }
+
+  //静态资源配置
+
+  config.static = {
+    prefix:"/static/",
+    dir:path.join(appInfo.baseDir,'app/public/static'),
+    dynamic:true,
+    maxAge:31536000
+  }
 
   config.mysql={
     client: {

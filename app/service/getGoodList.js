@@ -56,6 +56,10 @@ class GetGoodListService extends Service{
             }
         })
     }
+
+    openKey(){
+
+    }
 }
 
 module.exports = GetGoodListService
