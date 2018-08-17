@@ -28,15 +28,19 @@ class GetGoodListService extends Service{
     }
 
     async getAllGoodList(page=1){
-        const pageSize=10
+           
+        const pageSize=10   
         const ctx = this.ctx;
         const mysql  = ctx.app.mysql
-        let listData = await mysql.select('information',{
-            order:[['createtime','desc']],
-            offset:(page-1)*pageSize,
-            limit:pageSize
-        })
+        const userId = ctx.userId
         
+        let listData = await mysql.query('SELECT * FROM information order by updatetime desc')
+
+        let getZan = await mysql.select('zantable',{
+              where: { guest: userId }
+        })
+
+        console.log(getZan)
         this.formatIMG_TIME(listData)
         return listData
     }
@@ -48,10 +52,12 @@ class GetGoodListService extends Service{
                     item[key] = item[key]?item[key].split(','):[]
                 }
                 if( key === 'createtime' ){
-                    item[key]=  moment(item[key],'YYYY-MM-DD HH:mm:ss').format('YY-MM-DD HH:mm');
+                    let time = new Date( parseInt( item[key] )*1000)
+                    item[key]=  moment(time,'YYYY-MM-DD HH:mm:ss').format('YY年MM月DD HH:mm');
                 }
                 if( key === 'updatetime' ){
-                    item[key]=  moment(item[key],'YYYY-MM-DD HH:mm:ss').format('YY-MM-DD HH:mm');
+                    let time =new Date( parseInt( item[key] )*1000)
+                    item[key]=  moment(time,'YYYY-MM-DD HH:mm:ss').format('YY年MM月DD HH:mm');
                 }
             }
         })

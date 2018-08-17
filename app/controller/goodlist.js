@@ -1,10 +1,8 @@
 'use strict';
 const egg=require('egg')
 const Controller = egg.Controller;
-
+const crypt =  require('../service/crypt_class') 
 const formatData = require('../until/index')
-
-
 
 class GoodListController extends  Controller{
     async index(){
@@ -12,6 +10,7 @@ class GoodListController extends  Controller{
         let lists =  await ctx.service.getGoodList.getGoodList();
         ctx.body= { info: lists }
     }
+
     async community(){
     	const ctx = this.ctx;
     	let pages = ctx.request.body.pages
@@ -37,8 +36,6 @@ class GoodListController extends  Controller{
 
         data = formatData.format_data_obj( data )
 
-        console.log(data)
-
         if(data){
             ctx.body = {
                 info:data
@@ -49,6 +46,65 @@ class GoodListController extends  Controller{
             } 
         }
         
+    }
+    
+    async addZan(){
+        let resSuccess =  this.config.resSuccess
+        let resError = this.config.resError
+        let resTimeout = this.config.resTimeout 
+        const ctx=this.ctx
+        const id = ctx.request.body.id
+        const master = ctx.request.body.master
+        const mysql = this.app.mysql
+        let uesrId = ctx.userId
+        console.log(uesrId)
+        let getZan = await mysql.get('zantable',{
+            guest:uesrId,
+            articid:id
+        })
+
+        if( getZan ) {
+            ctx.body ={
+                ...resSuccess
+            }
+            return
+        }  
+        
+        try{
+            let result = await mysql.query('update information set zan = (zan + ?) where id = ?',[1,id])
+
+            let addSuccess = result.affectedRows
+
+            if( addSuccess ){
+
+                let addClum = await mysql.insert('zantable',{
+                    guest:uesrId,
+                    master:master,
+                    articid:id
+                })
+              
+
+                let sqlSucc = addClum.affectedRows
+
+                if( sqlSucc ){
+                    ctx.body = {
+                        ...resSuccess
+                    }
+                }else{
+                    ctx.body = {
+                       ...resError     
+                    }
+                }
+
+            }else{
+                ctx.body = {
+                   ...resError     
+                }
+            }
+        }catch(e){
+            console.log(e)
+            throw e
+        }
     }
 }
 

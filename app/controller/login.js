@@ -26,28 +26,21 @@ class LoginController extends Controller {
       return
     }
     
-    const openId = result.openid
-    const session_key = result.session_key
+    const openId = result.wxRes.openid
+    const session_key = result.wxRes.session_key
 
-    let token = openId+ '.' + session_key + '.' +((1000*60*60*72).toString())
+    let token = openId+ '.' + session_key + '.' +((1000*60*60*72).toString())+'.'+result.id
 
     token = cryp.cipher( token , this.config.keys )
 
-  	try{
-  		this.ctx.body= {
-  			info:{
-          token
-  			},
-  			...resSuccess
-  		}
-  	}catch (err){
-      this.ctx.status = 401
-  		this.ctx.body = {
-  			...resError
-  		}
+  	this.ctx.body= {
+  		info:{
+        token
+  		},
+  		...resSuccess
   	}
-  }
-
-}
+  
+  }  
+} 
 
 module.exports = LoginController;

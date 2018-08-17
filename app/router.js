@@ -6,6 +6,8 @@
 module.exports = app => {
   const { router, controller } = app;
   
+  const setToken = app.middleware.setToken()
+
   router.get('/',controller.home.index);
   //上传文章
   router.post('/api/upload/article',controller.upload.article);
@@ -14,7 +16,9 @@ module.exports = app => {
   //登录
   router.post('/api/login',controller.login.index);
   //获取资讯
-  router.post('/api/community',controller.goodlist.community);
+  router.post('/api/community',setToken,controller.goodlist.community);
   //获取资讯详情
   router.post('/api/getDetail',controller.goodlist.getDetail);
+  //赞
+  router.post('/api/addZan',setToken,controller.goodlist.addZan)
 };
