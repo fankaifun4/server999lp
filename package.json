@@ -16,8 +16,7 @@
     "egg-validate": "^1.1.0",
     "egg-view-nunjucks": "^2.2.0",
     "js-base64": "^2.4.8",
-    "moment": "^2.22.2",
-    "request": "^2.88.0"
+    "moment": "^2.22.2"
   },
   "devDependencies": {
     "autod": "^3.0.1",
