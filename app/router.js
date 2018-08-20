@@ -17,4 +17,6 @@ module.exports = app => {
   router.post('/api/community',controller.goodlist.community);
   //获取资讯详情
   router.post('/api/getDetail',controller.goodlist.getDetail);
+  //图片上传签证
+  router.post('/api/sts',controller.sts.index)
 };
