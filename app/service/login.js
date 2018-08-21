@@ -26,11 +26,17 @@ class LoginService extends Service{
 	  	try{
 
 		  	let cryptData = new crypt( appid,session_key )
+
 		  	let userInfo  = cryptData.decryptData( encryptedData,iv )
+
 		  	const mysql  =  this.app.mysql
+
 		  	const user_info = JSON.stringify( userInfo )
+
 		  	const create_time = userInfo.watermark.timeshamp
-		  	const last_visit_time = parseInt( (new Date().getTime()).toString().substring(0,10) )
+
+		  	const last_visit_time = new Date().getTime()
+		  	
 		  	let getId = await mysql.get('user',{
 		  		open_id
 		  	})
@@ -38,7 +44,6 @@ class LoginService extends Service{
 		  	let insertQuery
 		  	
 	  		if( getId.open_id ){
-
 				insertQuery  = await mysql.update('user',{
 			  		uuid:"",
 			  		skey:'数据更新',
@@ -61,10 +66,7 @@ class LoginService extends Service{
 			  		user_info:user_info
 			  	})
 		  	}
-			return {
-				wxRes:wxRes.data,
-				id:getId.id
-			}
+			return wxRes.data
 		  }catch(e){
 		  	return 'error'	
 		  }

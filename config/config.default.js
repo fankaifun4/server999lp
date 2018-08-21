@@ -102,7 +102,7 @@ module.exports = appInfo => {
 
   config.resSuccess={
       code:1,
-      msg:'操作成功',
+      msg:'操作成',
   }
 
   config.resError = {

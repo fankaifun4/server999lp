@@ -30,6 +30,7 @@ class UploadController extends  Controller{
                 ctx.body= res
             }else{
                 ctx.body= {
+                    status: 400,
                     msg:'未知错误'
                 }
             }
@@ -50,6 +51,7 @@ class UploadController extends  Controller{
         await pump(stream, writeStream);
         imageFileName = articURI+stramName.filename
         this.ctx.body = {
+            status:200,
             msg:'上传成功',
             url:imageFileName
         };
