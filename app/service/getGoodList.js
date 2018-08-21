@@ -28,19 +28,17 @@ class GetGoodListService extends Service{
     }
 
     async getAllGoodList(page=1){
-           
-        const pageSize=10   
+        const pageSize=5   
         const ctx = this.ctx;
         const mysql  = ctx.app.mysql
         const userId = ctx.userId
-        
-        let listData = await mysql.query('SELECT * FROM information order by updatetime desc')
+        const osffset = (page-1)*pageSize
+        let listData = await mysql.query(`select t.*,p.guest from information t
+         LEFT JOIN zantable p on t.id = p.articid and p.guest = ? ORDER BY createtime desc LIMIT ? OFFSET ?`,[userId,pageSize,osffset])
 
-        let getZan = await mysql.select('zantable',{
-              where: { guest: userId }
+        listData.forEach(item=>{
+            item['isSupport'] = item.guest ===  userId ? true :false
         })
-
-        console.log(getZan)
         this.formatIMG_TIME(listData)
         return listData
     }
@@ -49,15 +47,13 @@ class GetGoodListService extends Service{
         list.map(item=>{
             for(let key  in item){
                 if( key === 'imgs' ){
-                    item[key] = item[key]?item[key].split(','):[]
+                    item[key] = item[key]?item[key].split(';'):[]
                 }
                 if( key === 'createtime' ){
-                    let time = new Date( parseInt( item[key] )*1000)
-                    item[key]=  moment(time,'YYYY-MM-DD HH:mm:ss').format('YY年MM月DD HH:mm');
+                    item[key]=  moment(item[key],'YYYY-MM-DD HH:mm:ss').format('YY年MM月DD HH:mm');
                 }
                 if( key === 'updatetime' ){
-                    let time =new Date( parseInt( item[key] )*1000)
-                    item[key]=  moment(time,'YYYY-MM-DD HH:mm:ss').format('YY年MM月DD HH:mm');
+                    item[key]=  moment(item[key],'YYYY-MM-DD HH:mm:ss').format('YY年MM月DD HH:mm');
                 }
             }
         })

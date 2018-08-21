@@ -13,10 +13,11 @@ class GoodListController extends  Controller{
 
     async community(){
     	const ctx = this.ctx;
-    	let pages = ctx.request.body.pages
+
+    	let page = ctx.request.body.page
     	try{
-    		let lists =  await ctx.service.getGoodList.getAllGoodList(pages);
-    		ctx.body= { info: lists }
+    		let lists =  await ctx.service.getGoodList.getAllGoodList(page);
+            ctx.body= { info: lists }
     	}catch(e){
     		ctx.status = 403
     		ctx.body = e	
@@ -51,13 +52,15 @@ class GoodListController extends  Controller{
     async addZan(){
         let resSuccess =  this.config.resSuccess
         let resError = this.config.resError
-        let resTimeout = this.config.resTimeout 
+        let resTimeout = this.config.resTimeout     
+
+        
         const ctx=this.ctx
         const id = ctx.request.body.id
         const master = ctx.request.body.master
         const mysql = this.app.mysql
         let uesrId = ctx.userId
-        console.log(uesrId)
+        
         let getZan = await mysql.get('zantable',{
             guest:uesrId,
             articid:id
@@ -83,7 +86,6 @@ class GoodListController extends  Controller{
                     articid:id
                 })
               
-
                 let sqlSucc = addClum.affectedRows
 
                 if( sqlSucc ){
