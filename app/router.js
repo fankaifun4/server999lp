@@ -9,16 +9,28 @@ module.exports = app => {
   const setToken = app.middleware.setToken()
 
   router.get('/',controller.home.index);
+
   //上传文章
   router.post('/api/upload/article',controller.upload.article);
+
   //上传图片
   router.post('/api/upload/image',controller.upload.image);
+
   //登录
   router.post('/api/login',controller.login.index);
+
+  //获取首页热门文章列表
+  router.post('/api/goodList',controller.article.list);
+
+  //获取文章详情
+  router.post('/api/article',controller.article.detail);
+
   //获取资讯
   router.post('/api/community',setToken,controller.goodlist.community);
+
   //获取资讯详情
   router.post('/api/getDetail',controller.goodlist.getDetail);
+
   //赞
-  router.post('/api/addZan',setToken,controller.goodlist.addZan)
+  router.post('/api/addZan',setToken,controller.goodlist.addZan);
 };

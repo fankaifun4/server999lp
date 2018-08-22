@@ -35,7 +35,7 @@ class LoginService extends Service{
 
 		  	const create_time = userInfo.watermark.timeshamp
 
-		  	const last_visit_time = new Date().getTime()
+		  	const last_visit_time = (new Date().getTime()/1000)-1
 		  	
 		  	let getId = await mysql.get('user',{
 		  		open_id

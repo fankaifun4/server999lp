@@ -5,7 +5,9 @@ const Controller=require('egg').Controller;
 
 class LoginController extends Controller {
   async index() { 
+
   	const ctx=this.ctx
+    const mysql  = ctx.app.mysql
   	const code=ctx.req.headers['wx-code']
   	const iv=ctx.req.headers['wx-iv']
   	const encryptedData=ctx.req.headers['wx-encry']
@@ -29,7 +31,12 @@ class LoginController extends Controller {
     const openId = result.openid
     const session_key = result.session_key
 
-    let token = openId+ '.' + session_key + '.' +((1000*60*60*72).toString())
+    let userId = await mysql.get('user',{
+      open_id:openId
+    })
+
+
+    let token = openId+ '.' + session_key + '.' +((1000*60*60*72).toString()) +'.' + userId.id
 
     token = cryp.cipher( token , this.config.keys )
 

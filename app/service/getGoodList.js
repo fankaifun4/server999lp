@@ -1,15 +1,13 @@
 const Service = require('egg').Service
 const moment = require('moment')
 class GetGoodListService extends Service{
-    async getGoodList( ){
+    async getGoodList(){
         const ctx = this.ctx;
         const mysql  = ctx.app.mysql
         let listData = await mysql.select('article',{
-            where:{ weight:50 },
-            columns:['userName','name','title','_type','weight','_id','img','synopsis','owner','up','look','_time'],
-            order:[['weight','desc']],
+            order:[['watch','desc']],
             offset:0,
-            limit:3
+            limit:5
         })
         let datas= listData.map(item=>{
             let obj = {}
@@ -50,10 +48,10 @@ class GetGoodListService extends Service{
                     item[key] = item[key]?item[key].split(';'):[]
                 }
                 if( key === 'createtime' ){
-                    item[key]=  moment(item[key],'YYYY-MM-DD HH:mm:ss').format('YY年MM月DD HH:mm');
+                    item[key]=  moment(item[key],'YYYY-MM-DD HH:mm:ss').format('MM/DD HH:mm');
                 }
                 if( key === 'updatetime' ){
-                    item[key]=  moment(item[key],'YYYY-MM-DD HH:mm:ss').format('YY年MM月DD HH:mm');
+                    item[key]=  moment(item[key],'YYYY-MM-DD HH:mm:ss').format('MM/DD HH:mm');
                 }
             }
         })

@@ -8,7 +8,12 @@ class GoodListController extends  Controller{
     async index(){
         const ctx = this.ctx;
         let lists =  await ctx.service.getGoodList.getGoodList();
-        ctx.body= { info: lists }
+        if(lists.length){
+            ctx.body= { info: lists }
+        }else{
+            ctx.body= { info: null }
+        }
+        
     }
 
     async community(){
@@ -54,15 +59,16 @@ class GoodListController extends  Controller{
         let resError = this.config.resError
         let resTimeout = this.config.resTimeout     
 
-        
+
         const ctx=this.ctx
         const id = ctx.request.body.id
         const master = ctx.request.body.master
         const mysql = this.app.mysql
-        let uesrId = ctx.userId
+        console.log( ctx.userId )
+        let userId = ctx.userId
         
         let getZan = await mysql.get('zantable',{
-            guest:uesrId,
+            guest:userId,
             articid:id
         })
 
@@ -81,7 +87,7 @@ class GoodListController extends  Controller{
             if( addSuccess ){
 
                 let addClum = await mysql.insert('zantable',{
-                    guest:uesrId,
+                    guest:userId,
                     master:master,
                     articid:id
                 })
