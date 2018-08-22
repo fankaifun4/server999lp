@@ -33,4 +33,7 @@ module.exports = app => {
 
   //赞
   router.post('/api/addZan',setToken,controller.goodlist.addZan);
+
+  //获取签名
+  router.post('/api/sign',setToken,controller.sign.index);
 };
