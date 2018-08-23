@@ -41,7 +41,7 @@ var util = {
     },
     // 计算签名
     getSignature: function (opt, key, method) {
-        var formatString = method + config.Domain + '/v2/index.php?' + util.json2str(opt, 1);
+        var formatString = method + config.Domain + '?' + util.json2str(opt, 1);
         var hmac = crypto.createHmac('sha1', key);
         var sign = hmac.update(new Buffer.from(formatString, 'utf8')).digest('base64');
         return sign;

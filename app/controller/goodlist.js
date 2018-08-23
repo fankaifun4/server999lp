@@ -34,11 +34,18 @@ class GoodListController extends  Controller{
         const reqboyd = ctx.request.body
         const _id = reqboyd._id
         const _type = reqboyd._type
+        const userId = ctx.userId
         const mysql=this.app.mysql
-        let data = await mysql.get('information',{
-            id:_id,
-            _type:_type
-        })
+        let data = await mysql.query(`select t.*,p.guest from information t LEFT JOIN zantable p
+         on t.id = p.articid and p.guest = ? where t.id = ?`,[userId,_id])
+
+        data.forEach(item=>{
+            item['isSupport'] = item.guest ===  userId ? true :false
+        })   
+
+        if( data.length ){
+            data = data[0]
+        }
 
         data = formatData.format_data_obj( data )
 
@@ -58,8 +65,6 @@ class GoodListController extends  Controller{
         let resSuccess =  this.config.resSuccess
         let resError = this.config.resError
         let resTimeout = this.config.resTimeout     
-
-
         const ctx=this.ctx
         const id = ctx.request.body.id
         const master = ctx.request.body.master

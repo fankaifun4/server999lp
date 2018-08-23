@@ -29,11 +29,14 @@ module.exports = app => {
   router.post('/api/community',setToken,controller.goodlist.community);
 
   //获取资讯详情
-  router.post('/api/getDetail',controller.goodlist.getDetail);
+  router.post('/api/communityDetail',setToken,controller.goodlist.getDetail);
 
   //赞
   router.post('/api/addZan',setToken,controller.goodlist.addZan);
 
   //获取签名
   router.post('/api/sign',setToken,controller.sign.index);
+
+  //获取奇遇列表
+  router.post('/api/getqiyulist',setToken,controller.qiyu.index);
 };
