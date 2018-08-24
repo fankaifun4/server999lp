@@ -28,6 +28,17 @@ class QiyuService extends Service{
 
 	    return qiyu;
 	}
+	async detail(id,_type){
+		const mysql  = this.ctx.app.mysql
+		let result  = await mysql.get('qiyu',{
+			id,
+			_type
+		})
+
+		console.log(result)
+
+		return result
+	}
 }
 
 module.exports = QiyuService

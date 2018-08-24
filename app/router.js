@@ -39,4 +39,13 @@ module.exports = app => {
 
   //获取奇遇列表
   router.post('/api/getqiyulist',setToken,controller.qiyu.index);
+
+  //获取奇遇列表
+  router.post('/api/getQiyuDetail',setToken,controller.qiyu.detail);
+
+   //获取攻略列表
+  router.post('/api/getGonglue',setToken,controller.gonglue.index);
+
+  // 获取攻略详情
+  router.post('/api/getGonglueDetail',setToken,controller.gonglue.detail);
 };
