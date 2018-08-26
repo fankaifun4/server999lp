@@ -8,5 +8,5 @@ module.exports = (options, app) => {
     } else {
       await next();
     }
-  }
+  };
 };

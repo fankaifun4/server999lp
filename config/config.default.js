@@ -1,20 +1,20 @@
 'use strict';
-const path = require('path')
+const path = require('path');
 module.exports = appInfo => {
   const config = exports = {};
 
   // add your config here
-  config.middleware = ['robot'];
+  config.middleware = [ 'robot' ];
 
   config.robot = {
     ua: [
       /Baiduspider/i,
-    ]
+    ],
   };
 
-  config.baseDir='app/'
+  config.baseDir = 'app/';
 
-  //session 配置
+  // session 配置
   config.session = {
     key: '999lp_SESS',
     maxAge: 24 * 3600 * 1000, // 1 天
@@ -23,25 +23,25 @@ module.exports = appInfo => {
   };
 
 
-  //csrf防范
+  // csrf防范
   config.security = {
-    csrf: false
+    csrf: false,
   };
 
   config.cors = {
-      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
-      origin: '*',
-      enable: true,
-      credentials: true,
-      package: 'egg-cors',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    origin: '*',
+    enable: true,
+    credentials: true,
+    package: 'egg-cors',
   };
 
-  //cookie
+  // cookie
   config.keys = 'fankaifun4';
 
-  config.appId = 'wx9162e60a20921494'
-  
-  config.appSecret  = 'c6d8fb60d3258e615abeb1071014e94c'
+  config.appId = 'wx9162e60a20921494';
+
+  config.appSecret = 'c6d8fb60d3258e615abeb1071014e94c';
 
   // 设置redis
   // config.redis = {
@@ -68,16 +68,16 @@ module.exports = appInfo => {
   //   serverUrl:'https://hacker-news.firebaseio.com/v0'
   // }
 
-  //静态资源配置
+  // 静态资源配置
 
   config.static = {
-    prefix:"/static/",
-    dir:path.join(appInfo.baseDir,'app/public/static'),
-    dynamic:true,
-    maxAge:31536000
-  }
+    prefix: '/static/',
+    dir: path.join(appInfo.baseDir, 'app/public/static'),
+    dynamic: true,
+    maxAge: 31536000,
+  };
 
-  config.mysql={
+  config.mysql = {
     client: {
       // host
       host: '212.64.19.161',
@@ -94,23 +94,23 @@ module.exports = appInfo => {
     app: true,
     // 是否加载到 agent 上，默认关闭
     agent: false,
-  }
+  };
 
 
-  config.resSuccess={
-      code:1,
-      msg:'操作成',
-  }
+  config.resSuccess = {
+    code: 1,
+    msg: '操作成',
+  };
 
   config.resError = {
-      code:0,
-      msg:'操作失败'
-  }
+    code: 0,
+    msg: '操作失败',
+  };
 
   config.resTimeout = {
-      code:401,
-      msg:'登录超时'
-  }
+    code: 401,
+    msg: '登录超时',
+  };
 
   return config;
 };

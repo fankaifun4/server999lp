@@ -69,7 +69,6 @@ class GoodListController extends  Controller{
         const id = ctx.request.body.id
         const master = ctx.request.body.master
         const mysql = this.app.mysql
-        console.log( ctx.userId )
         let userId = ctx.userId
         
         let getZan = await mysql.get('zantable',{

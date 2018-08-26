@@ -5,11 +5,11 @@
 exports.mysql = {
   enable: true,
   package: 'egg-mysql',
-}
+};
 
 exports.nunjucks = {
   enable: true,
-  package: 'egg-view-nunjucks'
+  package: 'egg-view-nunjucks',
 };
 
 // exports.static = {
@@ -19,15 +19,15 @@ exports.nunjucks = {
 
 
 exports.cors = {
-    enable: true,
-    package: 'egg-cors',
+  enable: true,
+  package: 'egg-cors',
 };
 
 exports.security = {
-    domainWhiteList: [],
+  domainWhiteList: [],
 };
 
 exports.validate = {
-    enable: true,
-    package: 'egg-validate',
+  enable: true,
+  package: 'egg-validate',
 };

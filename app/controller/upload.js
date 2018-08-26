@@ -13,31 +13,52 @@ class UploadController extends  Controller{
         try {
             ctx.validate({
                 title: { type: 'string' },
-                name: { type: 'string' },
                 _type: { type: 'string' },
-                _time: { type: 'datetime' },
-                _type_name: { type: 'string' },
                 content: { type: 'string' }
             });
             let res = await ctx.service.upload.res({},true)
+
             const sqlData = {
-                ...ctx.request.body,
-                img:imageFileName
+                ...ctx.request.body
             }
-            const sqlResult = await ctx.app.mysql.insert('article',sqlData)
-            const insertSuccess = sqlResult.affectedRows === 1;
-            if( insertSuccess){
-                ctx.body= res
+
+            const isUpdate = await ctx.app.mysql.get('qiyu',{
+                title:sqlData.title
+            })
+            
+            if(isUpdate){
+                const uploadQiyu =  await ctx.app.mysql.update('qiyu',{
+                    id:isUpdate.id,
+                    _type:sqlData._type ,
+                    content: sqlData.content
+                })
+                const uploadQiyuSuccess = uploadQiyu.affectedRows === 1;
+
+                if( uploadQiyuSuccess ){
+                     ctx.body= res
+                 }else{
+                    ctx.body= {
+                        status: 400,
+                        msg:'未知错误'
+                    }
+                 }
             }else{
-                ctx.body= {
-                    status: 400,
-                    msg:'未知错误'
+               
+                const sqlResult = await ctx.app.mysql.insert('qiyu',sqlData)
+                const insertSuccess = sqlResult.affectedRows === 1;
+               
+                if( insertSuccess){
+                    ctx.body= res
+                }else{
+                    ctx.body= {
+                        status: 400,
+                        msg:'未知错误'
+                    }
                 }
             }
             return
         } catch (err) {
-            ctx.logger.warn(err.errors);
-            let res = await ctx.service.upload.res(err.errors,false)
+            let res = await ctx.service.upload.res(err,false)
             ctx.body = res;
             return;
         }
