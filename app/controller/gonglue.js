@@ -7,8 +7,9 @@ class GonglueController extends Controller {
   async index() {
   	const ctx = this.ctx;
     const page = ctx.request.body.page;
+    const pageSize = ctx.request.body.pageSize||20
     try {
-      let gonglue = await ctx.service.gonglue.index(page);
+      let gonglue = await ctx.service.gonglue.index(page,pageSize);
       gonglue = formatData.format_data_list(gonglue);
       ctx.body = {
         info: gonglue,
