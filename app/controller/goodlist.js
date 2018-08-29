@@ -18,7 +18,6 @@ class GoodListController extends  Controller{
 
     async community(){
     	const ctx = this.ctx;
-
     	let page = ctx.request.body.page
     	try{
     		let lists =  await ctx.service.getGoodList.getAllGoodList(page);

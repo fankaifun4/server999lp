@@ -31,12 +31,11 @@ class GetGoodListService extends Service {
     const mysql = ctx.app.mysql;
     const userId = ctx.userId;
     const osffset = (page - 1) * pageSize;
-    const listData = await mysql.query(`select t.*,p.guest from information t
-         LEFT JOIN zantable p on t.id = p.articid and p.guest = ? ORDER BY createtime desc LIMIT ? OFFSET ?`, [ userId, pageSize, osffset ]);
+    const listData = await mysql.query(`select * from information ORDER BY createtime desc LIMIT ? OFFSET ?`, [  pageSize, osffset ]);
 
-    listData.forEach(item => {
-      item.isSupport = item.guest === userId;
-    });
+    // listData.forEach(item => {
+    //   item.isSupport = item.guest === userId;
+    // });
     this.formatIMG_TIME(listData);
     return listData;
   }
