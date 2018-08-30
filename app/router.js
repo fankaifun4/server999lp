@@ -57,4 +57,8 @@ module.exports = app => {
   // 新闻资讯详情
   router.post('/api/newsDetail', setToken, controller.news.detail);
   
+  //后台管理路由
+  //
+  //
+  router.post('/api/uploadImg', setToken, controller.mannage.images);
 };
