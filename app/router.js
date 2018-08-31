@@ -58,7 +58,20 @@ module.exports = app => {
   router.post('/api/newsDetail', setToken, controller.news.detail);
   
   //后台管理路由
+  router.post('/api/mannage/admin',setToken,controller.mannage.admin)
   //
-  //
-  router.post('/api/uploadImg', setToken, controller.mannage.images);
+  //上传SM.MS图片资料
+  router.post('/api/mannage/uploadImg', setToken, controller.mannage.images);
+
+  //上传攻略文章
+  router.post('/api/mannage/addGonglue',setToken,controller.mannage.addGonglue);
+
+  //上传奇遇攻略
+  router.post('/api/mannage/addQiyu',setToken,controller.mannage.addQiyu);
+
+   //上传八卦客栈
+  router.post('/api/mannage/addInformation',setToken,controller.mannage.addInformation);
+
+  //新闻添加
+  router.post('/api/mannage/addNews',setToken,controller.mannage.addNews);
 };

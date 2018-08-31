@@ -13,7 +13,6 @@ module.exports = appInfo => {
   };
 
   config.baseDir = 'app/';
-
   // session 配置
   config.session = {
     key: '999lp_SESS',
