@@ -27,13 +27,13 @@ module.exports = appInfo => {
     csrf: false,
   };
 
-  // config.cors = {
-  //   allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
-  //   origin: '*',
-  //   enable: true,
-  //   credentials: true,
-  //   package: 'egg-cors',
-  // };
+  config.cors = {
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    origin: '*',
+    enable: true,
+    credentials: true,
+    package: 'egg-cors',
+  };
 
   // cookie
   config.keys = 'fankaifun4';
