@@ -12,6 +12,7 @@ class GonglueService extends Service {
   }
   async detail(id) {
     const mysql = this.ctx.app.mysql;
+    const addWatch = await mysql.query('update gonglue  SET watch=watch+1 where id=?',[id])
     const result = await mysql.get('gonglue', {
       id,
     });

@@ -13,6 +13,7 @@ class NewsController extends Controller {
   	const mysql = ctx.app.mysql;
   	const id = ctx.request.body.id;
   	try {
+      const addWatch = await mysql.query('update news  SET watch=watch+1 where id=?',[id])
   		const result = await mysql.get('news', {
   			id,
   		});

@@ -22,6 +22,7 @@ class ArticleCtrl extends Controller {
     	const result = await mysql.get('article', {
     		id,
     	});
+      const addWatch = await mysql.query('update article  SET watch=watch+1 where id=?',[id])
     	if (result) {
     		ctx.body = {
     			info: result,

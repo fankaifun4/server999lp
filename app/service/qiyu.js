@@ -31,6 +31,7 @@ class QiyuService extends Service {
   }
   async detail(id, _type) {
     const mysql = this.ctx.app.mysql;
+    const addWatch = await mysql.query('update qiyu  SET watch=watch+1 where id=?',[id])
     const result = await mysql.get('qiyu', {
       id,
       _type,

@@ -35,12 +35,8 @@ class GoodListController extends  Controller{
         const _type = reqboyd._type
         const userId = ctx.userId
         const mysql=this.app.mysql
-        let data = await mysql.query(`select t.*,p.guest from information t LEFT JOIN zantable p
-         on t.id = p.articid and p.guest = ? where t.id = ?`,[userId,_id])
-
-        data.forEach(item=>{
-            item['isSupport'] = item.guest ===  userId ? true :false
-        })   
+        const addWatch = await mysql.query('update information  SET watch=watch+1 where id=?',[_id])
+        let data = await mysql.query(`select * from information   where id = ?`,[_id])
 
         if( data.length ){
             data = data[0]
