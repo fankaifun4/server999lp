@@ -72,6 +72,21 @@ module.exports = app => {
    //上传八卦客栈
   router.post('/api/mannage/addInformation',setToken,controller.mannage.addInformation);
 
+ //上传八卦客栈
+  router.post('/api/mannage/addYjqyComm',controller.mannage.addYjqyComm);
+
   //新闻添加
   router.post('/api/mannage/addNews',setToken,controller.mannage.addNews);
+
+
+  //御剑情缘
+
+  //获取精选图片
+  router.post('/api/yjqy/getpics',controller.yjqy.getpics);
+
+  //获取咖啡屋列表
+  router.post('/api/yjqy/coffeeHouse',controller.yjqy.coffeeHouse);
+
+  //获取咖啡屋事件
+  router.post('/api/yjqy/coffeeThing',controller.yjqy.coffeeThing);
 };

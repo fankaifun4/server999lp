@@ -133,7 +133,7 @@ class MannageCtrl extends Controller {
   }
 
   async addInformation(){
-	const ctx = this.ctx;
+    const ctx = this.ctx;
   	const mysql = ctx.app.mysql;
   	const req = ctx.request.body;
   	try{
@@ -165,6 +165,8 @@ class MannageCtrl extends Controller {
   	}
   }
 
+
+
   async addNews(){
   	const ctx = this.ctx;
   	const mysql = ctx.app.mysql;
@@ -195,6 +197,44 @@ class MannageCtrl extends Controller {
 		ctx.status=500
 	  	ctx.body=err
   	}
+  }
+
+
+  async addYjqyComm(){
+    const ctx = this.ctx;
+    const mysql = ctx.app.mysql;
+    const req = ctx.request.body;
+    try{
+      ctx.validate({
+          title: { type: 'string' },
+          method: { type: 'string' },
+          content: { type: 'string' },
+          imgs: { type: 'array' },
+      });
+      req.imgs= req.imgs.join(';')
+      console.log(1)
+      let insert  =await mysql.insert('yjqy_community',{
+        ...req
+      })
+      console.log(2)
+      let insertSucc =insert.affectedRows 
+      console.log( insertSucc )
+      if(insertSucc){
+        ctx.body={
+          code:1,
+          info:"操作成功"
+        }
+      }else{
+        ctx.body={
+          code:0,
+          info:"操作失败"
+        }
+      }
+    }catch(err){
+      ctx.status=500
+      console.log(err)
+      ctx.body=err
+    }
   }
 }
 
