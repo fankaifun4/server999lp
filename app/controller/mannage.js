@@ -212,13 +212,11 @@ class MannageCtrl extends Controller {
           imgs: { type: 'array' },
       });
       req.imgs= req.imgs.join(';')
-      console.log(1)
       let insert  =await mysql.insert('yjqy_community',{
         ...req
       })
-      console.log(2)
       let insertSucc =insert.affectedRows 
-      console.log( insertSucc )
+      
       if(insertSucc){
         ctx.body={
           code:1,
