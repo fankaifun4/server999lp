@@ -7,7 +7,7 @@ class GetGoodListService extends Service {
     const listData = await mysql.select('article', {
       order: [[ 'watch', 'desc' ]],
       offset: 0,
-      limit: 5,
+      limit: 6,
     });
     const datas = listData.map(item => {
       const obj = {};
@@ -26,7 +26,7 @@ class GetGoodListService extends Service {
   }
 
   async getAllGoodList(page = 1) {
-    const pageSize = 5;
+    const pageSize = 6;
     const ctx = this.ctx;
     const mysql = ctx.app.mysql;
     const userId = ctx.userId;
