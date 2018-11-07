@@ -12,6 +12,8 @@ module.exports = app => {
 
   router.get('/', controller.home.index);
 
+  router.get('/api/test',controller.test.index)
+
   // 上传文章
   router.post('/api/upload/article', controller.upload.article);
 
